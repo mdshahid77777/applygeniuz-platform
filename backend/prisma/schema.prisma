@@ -1,0 +1,81 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  RECRUITER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  APPLIED
+  REVIEW
+  SHORTLIST
+  REJECTED
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         Role      @default(STUDENT)
+  githubUser   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  resumes      Resume[]  // Student uploads
+  jobsCreated  Job[]     // Recruiter listings
+}
+
+model Resume {
+  id               String    @id @default(uuid())
+  studentId        String
+  student          User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  title            String
+  fileUrl          String?
+  parsedText       String    @db.Text
+  atsScore         Int       @default(0)
+  bulletScore      Int       @default(0)
+  readabilityScore Int       @default(0)
+  createdAt        DateTime  @default(now())
+
+  // Relations
+  applications     Candidate[]
+}
+
+model Job {
+  id           String      @id @default(uuid())
+  recruiterId  String
+  recruiter    User        @relation(fields: [recruiterId], references: [id], onDelete: Cascade)
+  title        String
+  description  String      @db.Text
+  targetSkills String[]    // Array of semantic key skills required
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  applicants   Candidate[]
+}
+
+model Candidate {
+  id                 String            @id @default(uuid())
+  jobId              String
+  job                Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  resumeId           String
+  resume             Resume            @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  semanticMatchScore Int               @default(0)
+  status             ApplicationStatus @default(APPLIED)
+  recruiterNotes     String?           @db.Text
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@unique([jobId, resumeId])
+}

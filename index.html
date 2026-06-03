@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ApplyGeniuz — AI Recruitment Intelligence Operating System</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="ApplyGeniuz is a premium, enterprise-grade AI Recruitment Intelligence Operating System. Optimize resumes, analyze role alignment semantically, and generate recruiter-grade profiles." />
+  <meta name="keywords" content="ApplyGeniuz, AI recruitment, ATS optimization, resume tailoring, candidate screening, developer portfolio index" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:title" content="ApplyGeniuz — AI Recruitment Intelligence Operating System" />
+  <meta property="og:description" content="Evolve resume tailoring with semantic concept mapping, quantitative bullet auditing, and automated high-fidelity recruiter alignment reports." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://applygeniuz.ai" />
+  <meta property="og:image" content="https://applygeniuz.ai/assets/preview.png" />
+  
+  <!-- Twitter Metadata -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ApplyGeniuz — AI Recruitment Intelligence Operating System" />
+  <meta name="twitter:description" content="Evolve resume tailoring with semantic concept mapping, quantitative bullet auditing, and automated high-fidelity recruiter alignment reports." />
+  <meta name="twitter:image" content="https://applygeniuz.ai/assets/preview.png" />
+  
+  <!-- Structured Schema: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ApplyGeniuz",
+    "operatingSystem": "All",
+    "applicationCategory": "BusinessApplication",
+    "description": "AI Recruitment Intelligence Operating System helping candidates optimize resumes and recruiters match roles semantically.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Premium Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Chart.js for custom HSL visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- pdf.js (Client-side text extractor) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar" id="appNavbar">
+    <div class="container">
+      <div class="nav-content">
+        <!-- Logo -->
+        <a href="#" class="logo" id="navLogo">
+          <div class="logo-icon">AG</div>
+          <span style="font-weight: 800; color: var(--text-primary); letter-spacing:-0.03em;">ApplyGeniuz</span>
+          <span class="logo-subbrand">Recruitment Intelligence</span>
+        </a>
+        
+        <!-- Center Links -->
+        <ul class="nav-links">
+          <li><a href="#how-it-works">Workflow</a></li>
+          <li><a href="#fail-factors">Common Failures</a></li>
+          <li><a href="#testimonials">Placement Feedback</a></li>
+        </ul>
+        
+        <!-- Workspace Mode Selector Group -->
+        <div class="nav-controls" style="display:flex; align-items:center; gap:0.5rem;">
+          <!-- Auth Control Button (Not logged in) -->
+          <button class="btn btn-secondary" id="navAuthBtn" style="padding:0.4rem 0.85rem; font-size:0.8rem; border-radius:var(--radius-sm); border:1px solid var(--border); font-weight:600; display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer;">
+            <i data-lucide="log-in" class="icon-xs"></i> Sign In
+          </button>
+
+          <!-- Dynamic User Account Profile Dropdown (Logged in) -->
+          <div class="nav-user-dropdown" id="navUserDropdown" style="display:none;">
+            <button id="navProfileBtn">
+              <div id="navUserAvatar">U</div>
+              <span id="navUserName" style="max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">User</span>
+              <span id="navUserRoleBadge">STUDENT</span>
+            </button>
+            <div class="user-menu-items" id="userMenuItems" style="display:none;">
+              <button class="menu-action-btn" id="btnLogout">
+                <i data-lucide="log-out" class="icon-xs"></i> Log Out
+              </button>
+            </div>
+          </div>
+          
+          <div class="mode-toggle-group" id="modeSelector">
+            <button class="toggle-option active" data-view="landing" id="toggleLanding">
+              <i data-lucide="home" class="icon-sm"></i> Landing
+            </button>
+            <button class="toggle-option" data-view="student" id="toggleStudent">
+              <i data-lucide="graduation-cap" class="icon-sm"></i> Student
+            </button>
+            <button class="toggle-option" data-view="recruiter" id="toggleRecruiter">
+              <i data-lucide="briefcase" class="icon-sm"></i> Recruiter
+            </button>
+            <button class="toggle-option" data-view="admin" id="toggleAdmin" style="display:none;">
+              <i data-lucide="shield" class="icon-sm"></i> Admin
+            </button>
+          </div>
+
+          <!-- Theme Toggle (Now at the FAR RIGHT) -->
+          <button class="theme-toggle-btn" id="themeToggle" title="Toggle Visual Theme">
+            <i data-lucide="sun" class="sun-icon icon-sm"></i>
+            <i data-lucide="moon" class="moon-icon icon-sm"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====================================================================
+       VIEW 1: STORYTELLING LANDING PAGE
+       ==================================================================== -->
+  <div id="landingView" class="page-view active">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="badge-new">Recruitment Intelligence</div>
+        <h1>AI Recruitment Intelligence for Students & Recruiters</h1>
+        <p>Optimize resumes, analyze candidate fit, and streamline hiring workflows with modern recruitment intelligence. Focus on core technical skills and metrics-backed achievements.</p>
+        
+        <div class="cta-group">
+          <button class="btn btn-primary" onclick="switchView('student')">
+            <i data-lucide="user-check" class="icon-sm"></i> Optimize Resume
+          </button>
+          <button class="btn btn-glow" onclick="switchView('recruiter')">
+            <i data-lucide="users" class="icon-sm"></i> Recruiter Dashboard
+          </button>
+          <a href="#how-it-works" class="btn btn-secondary">
+            <i data-lucide="git-branch" class="icon-sm"></i> View Workflow
+          </a>
+        </div>
+
+        <!-- Animated Hero Dashboard Preview Panel -->
+        <div class="hero-preview-container">
+          <div class="preview-bar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-title">applygeniuz_dashboard_preview.sh</div>
+          </div>
+          <div class="preview-content">
+            <div class="preview-widget">
+              <div class="widget-title">Resumes Evaluated</div>
+              <div class="widget-value" id="statResumes">4,819</div>
+              <div class="widget-desc">Parsed with semantic synonym maps.</div>
+            </div>
+            <div class="preview-widget">
+              <div class="widget-title">Screening Time Saved</div>
+              <div class="widget-value" id="statSpeed">85%</div>
+              <div class="widget-desc">Reduces manual reading overhead.</div>
+            </div>
+            <div class="preview-widget">
+              <div class="widget-title">Alignment Accuracy</div>
+              <div class="widget-value" id="statPrecision">92%</div>
+              <div class="widget-desc">Matches technical skills to roles.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Minimalist Trusted By Tech Brand Ticker -->
+        <div class="trusted-container" style="margin-top: 5rem; text-align: center;">
+          <p style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); font-weight: 700; margin-bottom: 2rem;">Trusted by talent leads at forward-thinking companies</p>
+          <div class="trusted-logos" style="display: flex; justify-content: center; align-items: center; gap: 4rem; flex-wrap: wrap; opacity: 0.45;">
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">VERCEL</div>
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">LINEAR</div>
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">STRIPE</div>
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">airbnb</div>
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">Notion</div>
+            <div style="font-family: 'Satoshi', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text-primary);">Figma</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Why Resumes Fail -->
+    <section class="fail-section" id="fail-factors">
+      <div class="container">
+        <div class="section-tag">Common Pitfalls</div>
+        <h2 class="section-title">Why Resumes Fail Screening</h2>
+        <p class="section-desc">Many resumes do not make it past screening filters due to simple structural issues or layout choices.</p>
+        
+        <div class="fail-grid">
+          <div class="fail-card">
+            <div class="fail-icon-wrapper">
+              <i data-lucide="alert-octagon" class="icon-lg text-danger"></i>
+            </div>
+            <h3>Lack of Measured Impact</h3>
+            <p>Resumes listing lists of duties without specifying quantitative achievements or numbers. Focus on metrics, scale, and performance results.</p>
+          </div>
+          <div class="fail-card">
+            <div class="fail-icon-wrapper">
+              <i data-lucide="shuffle" class="icon-lg text-primary"></i>
+            </div>
+            <h3>Weak Synonym Matching</h3>
+            <p>Checkers looking for exact words, failing if you describe the same concepts differently. ApplyGeniuz matches skills to job requirements semantically.</p>
+          </div>
+          <div class="fail-card">
+            <div class="fail-icon-wrapper">
+              <i data-lucide="file-warning" class="icon-lg text-warning"></i>
+            </div>
+            <h3>Parsing Errors</h3>
+            <p>Complex visual templates, charts, or columns that database parsers fail to read. Keep the layouts minimal, readable, and clean.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: AI Features Showcase (Modern Asymmetrical SaaS Layout) -->
+    <section class="features-section" id="ai-intelligence">
+      <div class="container">
+        <div class="section-tag">AI Intelligence</div>
+        <h2 class="section-title">Next-Gen Intelligence Engine</h2>
+        <p class="section-desc">Evolve candidate assessment and optimization using deterministic parsing and semantic matching modules.</p>
+        
+        <div class="features-grid">
+          <!-- Card 1: Wide Layout (2 columns) -->
+          <div class="feature-card wide">
+            <div class="feature-content">
+              <div class="feature-icon-box">
+                <i data-lucide="cpu" class="icon-md"></i>
+              </div>
+              <h3>Neural Concept Alignment Engine</h3>
+              <p>Compare candidates directly against technical job requirements using concept synonyms, eliminating rigid exact-keyword limitations. Index frameworks, platforms, and databases semantically.</p>
+            </div>
+            <div class="feature-visual">
+              <div class="visual-tag matched">React.js</div>
+              <div class="visual-tag matched">Node.js</div>
+              <div class="visual-tag missing">Docker</div>
+            </div>
+          </div>
+          
+          <!-- Card 2: Small Tall Layout (1 column) -->
+          <div class="feature-card tall">
+            <div class="feature-content">
+              <div class="feature-icon-box">
+                <i data-lucide="sparkles" class="icon-md"></i>
+              </div>
+              <h3>Wording & Performance Audit</h3>
+              <p>Scan resume project bullets for passive phrasing. Refactor descriptions to begin with impactful action verbs and prompt for quantified achievements to elevate recruiter visibility.</p>
+            </div>
+          </div>
+
+          <!-- Card 3: Small Tall Layout (1 column) -->
+          <div class="feature-card tall">
+            <div class="feature-content">
+              <div class="feature-icon-box">
+                <i data-lucide="shield-alert" class="icon-md"></i>
+              </div>
+              <h3>Deterministic UX Validation</h3>
+              <p>Ensure data integrity with strict structure checkers. Instantly flag and reject non-resume inputs or generic text, completely preventing fabricated results and AI hallucinations.</p>
+            </div>
+          </div>
+
+          <!-- Card 4: Wide Layout (2 columns) -->
+          <div class="feature-card wide">
+            <div class="feature-content">
+              <div class="feature-icon-box">
+                <i data-lucide="file-text" class="icon-md"></i>
+              </div>
+              <h3>Recruiter-Grade Dynamic Composer</h3>
+              <p>Format tailored A4 documents using standard layouts, clean contact coordinates, and elegant single-column styling. Compose cover letters that match candidate experience and target roles naturally without AI templates.</p>
+            </div>
+            <div class="feature-visual document-visual">
+              <div class="visual-page-mock">
+                <div class="visual-line title"></div>
+                <div class="visual-line subtitle"></div>
+                <div class="visual-line"></div>
+                <div class="visual-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: AI Workflow Visualization -->
+    <section class="workflow-section" id="how-it-works">
+      <div class="container">
+        <div class="section-tag">System pipeline</div>
+        <h2 class="section-title">The Matching Workflow</h2>
+        <p class="section-desc">Understand how the platform evaluates experience levels and compiles compatibility metrics.</p>
+        
+        <div class="workflow-container">
+          <div class="workflow-connector"></div>
+          
+          <div class="workflow-step">
+            <div class="step-bubble">
+              <i data-lucide="upload-cloud"></i>
+            </div>
+            <div class="step-num">01</div>
+            <h3>Upload</h3>
+            <p>Upload document files</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-bubble">
+              <i data-lucide="cpu"></i>
+            </div>
+            <div class="step-num">02</div>
+            <h3>Text Extraction</h3>
+            <p>Parse resume text data</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-bubble">
+              <i data-lucide="database"></i>
+            </div>
+            <div class="step-num">03</div>
+            <h3>Semantic Scoring</h3>
+            <p>Match skills against criteria</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-bubble">
+              <i data-lucide="file-check-2"></i>
+            </div>
+            <div class="step-num">04</div>
+            <h3>Audits</h3>
+            <p>Check bullet structure</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-bubble">
+              <i data-lucide="trending-up"></i>
+            </div>
+            <div class="step-num">05</div>
+            <h3>Results</h3>
+            <p>View compatibility reports</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Before vs After Resume -->
+    <section class="comparison-section">
+      <div class="container">
+        <div class="section-tag">Before and After</div>
+        <h2 class="section-title">Refining Project Bullet Points</h2>
+        <p class="section-desc">See how replacing passive sentences with structured, metric-driven descriptions improves candidate visibility.</p>
+        
+        <div class="comparison-grid">
+          <!-- Before Card -->
+          <div class="comparison-card before">
+            <span class="rating-tag bad">Weak Bullet</span>
+            <h3>Before Optimization</h3>
+            <ul class="bullet-demo-list">
+              <li class="bullet-demo-item">"Worked on the React application frontend to make things faster."</li>
+              <li class="bullet-demo-item">"Responsible for updating the NodeJS databases and writing APIs."</li>
+              <li class="bullet-demo-item">"Created tests to check our web platform before deployment."</li>
+            </ul>
+          </div>
+          
+          <!-- After Card -->
+          <div class="comparison-card after">
+            <span class="rating-tag good">Optimized Output</span>
+            <h3>Optimized & Structured</h3>
+            <ul class="bullet-demo-list">
+              <li class="bullet-demo-item">
+                "Developed front-end components using React and TypeScript, reducing component load latency by 35%."
+                <div class="diff-stat"><i data-lucide="trending-up" class="icon-xs"></i> Style & Impact: Clean</div>
+              </li>
+              <li class="bullet-demo-item">
+                "Built API endpoints with Express and Node.js; designed Redis cache integration to lower query latency."
+                <div class="diff-stat"><i data-lucide="trending-up" class="icon-xs"></i> Skill Match: Strong</div>
+              </li>
+              <li class="bullet-demo-item">
+                "Wrote automated unit test suites using Jest, reducing integration errors during deployments."
+                <div class="diff-stat"><i data-lucide="trending-up" class="icon-xs"></i> Bullet Structure: Strong</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10: Testimonials -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="container">
+        <div class="section-tag">Placement Coordinator Feedback</div>
+        <h2 class="section-title">Used in Placement Drives</h2>
+        <p class="section-desc">Feedback from placement coordinators and hiring leads who use the workflow during screening processes.</p>
+        
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <p>"The recruiter ranking workflow simplified our screening pipeline during campus placement drives. We identified candidates matching our tech stacks in minutes."</p>
+            <div class="author-block">
+              <div class="author-avatar">MS</div>
+              <div>
+                <div class="author-name">Marcus Sterling</div>
+                <div class="author-role">Talent Lead @ VeloScale</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card">
+            <p>"Having candidates format their resumes for clean text parsing helped our internal database indexing significantly. The document preview renders cleanly."</p>
+            <div class="author-block">
+              <div class="author-avatar">AK</div>
+              <div>
+                <div class="author-name">Ananya Kapoor</div>
+                <div class="author-role">Placement Coordinator @ TechHub</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11: Final CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <h2>Ready to Refine Your Credentials?</h2>
+        <p>Optimize your resume formats or evaluate candidate databases through semantic matching pipelines.</p>
+        <div class="cta-group">
+          <button class="btn btn-primary" onclick="switchView('student')">
+            <i data-lucide="user-check" class="icon-sm"></i> Optimize Resume
+          </button>
+          <button class="btn btn-glow" onclick="switchView('recruiter')">
+            <i data-lucide="briefcase" class="icon-sm"></i> Recruiter Dashboard
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ====================================================================
+       VIEW 2: STUDENT WORKSPACE (RESUME & CAREER ENGINE)
+       ==================================================================== -->
+  <div id="studentView" class="page-view">
+    <section class="workspace-layout">
+      <div class="container">
+        
+        <!-- Welcome Meta Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h2 style="font-size:1.75rem; font-weight:800; letter-spacing:-0.03em;">Student Workspace</h2>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">Evaluate resume compatibility and format optimized document sheets.</p>
+          </div>
+          <div class="status-indicator ready" id="studentStatus">Standby</div>
+        </div>
+
+        <div class="workspace-grid">
+          
+          <!-- LEFT COLUMN: INPUTS -->
+          <div class="form-card">
+            <div class="form-title">
+              <i data-lucide="settings-2" class="icon-md" style="margin-right:0.25rem;"></i> Profile Settings
+            </div>
+            <p class="form-subtitle">Provide your credentials and target job details to evaluate alignment.</p>
+            
+            <!-- Upload Drag-Drop Zone -->
+            <div class="field-group">
+              <label>Resume File (PDF / TXT / MD)</label>
+              <div class="upload-container" id="studentUploadZone">
+                <i data-lucide="upload-cloud" class="icon-lg" style="margin-bottom:0.5rem; opacity:0.7;"></i>
+                <p class="upload-text">Drag and drop your resume file here</p>
+                <p class="upload-hint">or click to choose file (Max 5MB)</p>
+                <input type="file" id="studentFileInput" accept=".pdf,.txt,.md" style="display:none;" />
+              </div>
+              <p id="studentFileLabel" style="font-size:0.75rem; color:var(--success); margin-top:-0.75rem; margin-bottom:1rem; display:none; font-weight:600;"></p>
+            </div>
+
+            <!-- Resume Text Area -->
+            <div class="field-group">
+              <label>Resume Content</label>
+              <span class="field-hint">Paste your resume details below or edit parsed text.</span>
+              <textarea id="studentResumeText" placeholder="Example:
+John Doe
+john.doe@email.com | github.com/johndoe
+
+EXPERIENCE:
+- Developed interfaces using React and TypeScript.
+- Boosted loading speed by 35% through asset optimizations.
+- Coached 3 junior developer associates."></textarea>
+            </div>
+
+            <!-- Job Description Selector Tabs (Manual vs URL Import) -->
+            <div class="field-group">
+              <label>Target Job Criteria</label>
+              
+              <!-- Tab Header Selector Buttons -->
+              <div class="jd-tab-header">
+                <button class="jd-tab active" id="tabJdManual" type="button">
+                  <i data-lucide="edit-3" class="icon-xs"></i> Manual Paste
+                </button>
+                <button class="jd-tab" id="tabJdUrl" type="button">
+                  <i data-lucide="link" class="icon-xs"></i> Import from Job URL
+                </button>
+              </div>
+
+              <!-- Tab 1 Container: Manual Paste -->
+              <div id="jdManualContainer">
+                <span class="field-hint">Paste the target job description or requirements list below.</span>
+                <textarea id="studentJobText" placeholder="Example:
+We are looking for a Software Engineer with:
+- Deep expertise in React and frontend architectures
+- Strong command of TypeScript and modern styling
+- Experience writing unit tests
+- Familiarity with CI/CD deployment pipelines"></textarea>
+              </div>
+
+              <!-- Tab 2 Container: Import from URL -->
+              <div id="jdUrlContainer" style="display:none;">
+                <span class="field-hint">Paste a Deloitte, LinkedIn, Lever, or company job posting URL.</span>
+                <div style="display:flex; gap:0.5rem; margin-bottom:1.25rem;">
+                  <input type="text" id="studentJobUrlInput" placeholder="Paste Deloitte / LinkedIn / company job URL" style="padding:0.6rem 0.8rem; font-size:0.8rem;" />
+                  <button class="btn btn-secondary" id="studentJobUrlBtn" type="button" style="padding:0 1rem; font-size:0.8rem; flex-shrink:0;">
+                    <i data-lucide="download-cloud" class="icon-xs"></i> Import
+                  </button>
+                </div>
+                
+                <!-- Elegant scraper loader state -->
+                <div id="jobImportLoader" style="display:none; align-items:center; gap:0.75rem; background:var(--bg-surface); padding:1.25rem; border-radius:var(--radius-sm); border:1px solid var(--border); font-size:0.8rem;">
+                  <div class="skeleton-loader sk-circle" style="width:16px; height:16px; flex-shrink:0; background:var(--primary); animation:blink 1.2s infinite alternate;"></div>
+                  <div style="flex-grow:1;">
+                    <div style="font-weight:700; color:var(--text-primary);" id="jobImportLoaderTitle">Fetching job description...</div>
+                    <div style="font-size:0.7rem; color:var(--text-secondary);" id="jobImportLoaderSubtitle">Connecting to career portal...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GitHub username integration -->
+            <div class="field-group">
+              <label>GitHub Username (Optional)</label>
+              <span class="field-hint">Analyze repository statistics and metrics.</span>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="studentGitInput" placeholder="e.g., torvalds" />
+                <button class="btn btn-secondary" id="studentGitBtn" style="padding:0 1.25rem;">Sync</button>
+              </div>
+            </div>
+
+            <button class="btn btn-glow" id="studentAnalyzeBtn" style="width:100%; padding:0.9rem;">
+              <i data-lucide="shield-check" class="icon-sm"></i> Run Alignment Assessment
+            </button>
+          </div>
+
+          <!-- RIGHT COLUMN: DETAILED REPORT DASHBOARD -->
+          <div class="results-dashboard">
+            
+            <!-- Dashboard Main Scores Grid -->
+            <div class="dashboard-panel">
+              <div class="panel-section-title">
+                <i data-lucide="bar-chart-2" class="icon-sm" style="margin-right:0.25rem;"></i> Assessment Metrics
+              </div>
+              
+              <div class="metrics-grid">
+                <div class="metric-widget">
+                  <div class="metric-num blue" id="scoreATS">—</div>
+                  <div class="metric-lbl">Compatibility</div>
+                  <div class="metric-hint">Format and structure fit</div>
+                </div>
+                <div class="metric-widget">
+                  <div class="metric-num violet" id="scoreBullet">—</div>
+                  <div class="metric-lbl">Bullet Index</div>
+                  <div class="metric-hint">Action verb & metric check</div>
+                </div>
+                <div class="metric-widget">
+                  <div class="metric-num green" id="scoreReadability">—</div>
+                  <div class="metric-lbl">Readability</div>
+                  <div class="metric-hint">Style & syntax structure</div>
+                </div>
+                <div class="metric-widget">
+                  <div class="metric-num yellow" id="scoreFit">—</div>
+                  <div class="metric-lbl">Role Alignment</div>
+                  <div class="metric-hint">Calculated compatibility tier</div>
+                </div>
+              </div>
+
+              <!-- Skill Heatmap Visualization Panel -->
+              <div class="panel-section-title">
+                <i data-lucide="check-circle-2" class="icon-sm" style="margin-right:0.25rem;"></i> Skills Alignment
+              </div>
+              <div class="chart-layout">
+                <div class="canvas-container">
+                  <canvas id="studentSkillChart"></canvas>
+                </div>
+                <div class="skills-legend">
+                  <div class="legend-card">
+                    <h4>Matched Skills (<span id="countMatched">0</span>)</h4>
+                    <div class="legend-tags" id="tagsMatched">
+                      <span class="legend-tag matched">No assessment run</span>
+                    </div>
+                  </div>
+                  <div class="legend-card" style="margin-top: 1rem;">
+                    <h4>Missing & Gaps (<span id="countMissing">0</span>)</h4>
+                    <div class="legend-tags" id="tagsMissing">
+                      <span class="legend-tag missing">No assessment run</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actionable Bullet Quality breakdown -->
+              <div class="panel-section-title">
+                <i data-lucide="feather" class="icon-sm" style="margin-right:0.25rem;"></i> Bullet Quality Insights
+              </div>
+              <div class="feedback-list" id="bulletFeedbackList">
+                <div class="feedback-card info">
+                  <i data-lucide="info" class="icon-sm text-primary" style="margin-top:0.15rem;"></i>
+                  <div class="feedback-body">
+                    <h4>Awaiting Assessment</h4>
+                    <p>Enter your resume and click assessment to evaluate formatting strength.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ATS Integrity Checklist -->
+              <div class="panel-section-title" style="margin-top: 2rem;">
+                <i data-lucide="alert-triangle" class="icon-sm" style="margin-right:0.25rem;"></i> Format Integrity
+              </div>
+              <div class="feedback-list" id="formatFeedbackList">
+                <div class="feedback-card info">
+                  <i data-lucide="info" class="icon-sm text-primary" style="margin-top:0.15rem;"></i>
+                  <div class="feedback-body">
+                    <h4>System Diagnostics</h4>
+                    <p>Checks document layout, missing details, and link issues.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GitHub Portfolio Intelligence Panel -->
+              <div class="panel-section-title" style="margin-top: 2rem;">
+                <i data-lucide="github" class="icon-sm" style="margin-right:0.25rem;"></i> Developer Portfolio Insights
+              </div>
+              <div class="github-card" id="studentGitCard">
+                <div class="git-avatar" id="gitProfileAvatar" style="background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');"></div>
+                <div class="git-meta">
+                  <h4 id="gitProfileName">Developer Credentials</h4>
+                  <p id="gitProfileBio">Sync a valid GitHub username to index open source contributions.</p>
+                  <div class="git-stats">
+                    <div class="git-stat-item">Repositories: <strong id="gitRepos">—</strong></div>
+                    <div class="git-stat-item">Followers: <strong id="gitFollowers">—</strong></div>
+                    <div class="git-stat-item">Cred Score: <strong id="gitCredScore">—</strong></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Career Advisor / Missing Skills learning Roadmap -->
+              <div class="panel-section-title" style="margin-top: 2rem;">
+                <i data-lucide="compass" class="icon-sm" style="margin-right:0.25rem;"></i> Recommended Learning Path
+              </div>
+              <div id="studentRoadmapPanel">
+                <div class="feedback-card info">
+                  <i data-lucide="lightbulb" class="icon-sm text-warning" style="margin-top:0.15rem;"></i>
+                  <div class="feedback-body">
+                    <h4>Roadmap Suggestions</h4>
+                    <p>Run assessment to map missing skills to specific learning resources.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PREMIUM A4 DOCUMENT PREVIEW & WORKSPACE (NOTION/GRAMMARLY STYLE) -->
+            <div class="document-workspace" id="docWorkspace">
+              <div class="doc-tab-header">
+                <button class="doc-tab active" id="tabResume" data-doc="resume">
+                  <i data-lucide="file-text" class="icon-xs"></i> Optimized Resume
+                </button>
+                <button class="doc-tab" id="tabCover" data-doc="cover">
+                  <i data-lucide="mail" class="icon-xs"></i> Tailored Cover Letter
+                </button>
+              </div>
+              
+              <div class="document-toolbar">
+                <button class="doc-tool-btn" id="docBtnRegen" title="Re-evaluate output metrics">
+                  <i data-lucide="refresh-cw" class="icon-xs"></i> Regenerate
+                </button>
+                <button class="doc-tool-btn" id="docBtnCopy" title="Copy text content to clipboard">
+                  <i data-lucide="copy" class="icon-xs"></i> Copy
+                </button>
+                <button class="doc-tool-btn" id="docBtnPrint" title="Open native print configuration">
+                  <i data-lucide="printer" class="icon-xs"></i> Print
+                </button>
+                <button class="doc-tool-btn btn-primary" id="docBtnPdf" style="margin-left:auto;" title="Download professional document PDF">
+                  <i data-lucide="file-down" class="icon-xs"></i> Download PDF
+                </button>
+                <button class="doc-tool-btn btn-secondary" id="docBtnDocx" title="Download editable Microsoft Word DOCX">
+                  <i data-lucide="file-output" class="icon-xs"></i> Download DOCX
+                </button>
+              </div>
+              
+              <div class="document-page-wrapper">
+                <div class="a4-document-page" id="a4DocumentContent" contenteditable="true" spellcheck="false">
+                  <div style="text-align:center; padding-top:8rem; color:var(--text-tertiary);">
+                    <i data-lucide="file-text" class="icon-lg" style="margin:0 auto 1rem; opacity:0.3; display:block;"></i>
+                    <h3 style="font-weight:600; font-size:1rem; color:var(--text-primary);">A4 Interactive Preview</h3>
+                    <p style="font-size:0.8rem; max-width:280px; margin:0.5rem auto;">Run the assessment dashboard first to compile printable resume credentials.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STUDENT SAVED WORKSPACES & HISTORY PANEL -->
+            <div class="panel-section-title" style="margin-top: 3.5rem;">
+              <i data-lucide="folder-git" class="icon-sm" style="margin-right:0.25rem;"></i> Saved Workspaces & History
+            </div>
+            <div class="form-card" style="margin-top: 1rem; border-left: 2px solid var(--primary);">
+              <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">Resume Optimization History</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Revisit, restore, and continue editing your previously generated documents.</p>
+              
+              <div id="studentWorkspaceHistory" class="history-list" style="display:flex; flex-direction:column; gap:0.75rem;">
+                <div class="empty-state" style="padding: 1.5rem 1rem;">
+                  <p style="font-size: 0.8rem; color: var(--text-tertiary); margin:0;">No saved sessions yet. Run an alignment assessment to automatically persist your workspace.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ====================================================================
+       VIEW 3: RECRUITER WORKSPACE (BULK MATCHING ENGINE)
+       ==================================================================== -->
+  <div id="recruiterView" class="page-view">
+    <section class="workspace-layout">
+      <div class="container">
+        
+        <!-- Welcome Meta Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h2 style="font-size:1.75rem; font-weight:800; letter-spacing:-0.03em;">Recruiter Workspace</h2>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">Upload candidate batches and evaluate matches based on technical compatibility indicators.</p>
+          </div>
+          <div class="status-indicator ready" id="recruiterStatus">Dashboard Active</div>
+        </div>
+
+        <div class="recruiter-grid">
+          
+          <!-- LEFT SIDEBAR: INPUT CONFIG & FILTERS -->
+          <div class="sidebar-panel">
+            <div class="sidebar-title">Pipeline Settings</div>
+            
+            <!-- Job brief configuration input -->
+            <div class="filter-group">
+              <label>Target Job Criteria</label>
+              <span class="field-hint" style="margin-bottom:0.5rem; display:block;">Select or define target role description</span>
+              <select id="recruiterRoleSelect">
+                <option value="frontend">Senior Frontend Engineer</option>
+                <option value="backend">Backend Microservices Lead</option>
+                <option value="data">Data Scientist / AI Strategist</option>
+                <option value="custom">Define Custom Parameters...</option>
+              </select>
+            </div>
+
+            <!-- Custom Criteria Box (displays when custom is chosen) -->
+            <div class="filter-group" id="customJdContainer" style="display:none;">
+              <label>Custom Job Criteria Text</label>
+              <textarea id="recruiterCustomJd" style="min-height:120px; font-size:0.8rem;" placeholder="Paste custom job details..."></textarea>
+            </div>
+
+            <!-- Bulk upload drop zone -->
+            <div class="filter-group" style="margin-top:2rem;">
+              <label>Bulk Upload Resumes (PDF / TXT / MD)</label>
+              <span class="field-hint" style="margin-bottom:0.5rem; display:block;">Drop multiple talent resumes here. (Up to 10 files)</span>
+              
+              <div class="upload-container" id="recruiterUploadZone" style="padding:1.5rem 1rem;">
+                <i data-lucide="upload-cloud" class="icon-md" style="margin-bottom:0.25rem;"></i>
+                <p style="font-size:0.75rem; font-weight:600; margin-bottom:0.25rem;">Bulk Drop Zone</p>
+                <p style="font-size:0.65rem; color:var(--text-tertiary);">PDF, TXT, MD allowed</p>
+                <input type="file" id="recruiterFileInput" accept=".pdf,.txt,.md" multiple style="display:none;" />
+              </div>
+              <div id="bulkFilesIndicator" style="font-size:0.7rem; color:var(--primary); font-weight:600; text-align:center; display:none; margin-top:-0.5rem;"></div>
+            </div>
+
+            <button class="btn btn-glow" id="recruiterProcessBtn" style="width:100%; font-size:0.8rem; padding:0.7rem 1.25rem;">
+              <i data-lucide="zap" class="icon-sm"></i> Batch Semantic Match
+            </button>
+            
+            <div class="sidebar-title" style="margin-top:2.5rem; margin-bottom:1rem;">Dashboard Filters</div>
+            
+            <!-- Sorting controls -->
+            <div class="filter-group">
+              <label>Sort Metric</label>
+              <select id="recruiterSort">
+                <option value="ats">Compatibility Score</option>
+                <option value="similarity">Role Alignment</option>
+                <option value="bullet">Experience & Bullet Quality</option>
+                <option value="alphabetical">Candidate Surname</option>
+              </select>
+            </div>
+
+            <!-- Minimum ATS threshold -->
+            <div class="filter-group">
+              <label>Min Comp Score: <span id="minAtsValue">60%</span></label>
+              <input type="range" id="recruiterMinAts" min="0" max="100" value="60" style="width:100%; accent-color:var(--primary);" />
+            </div>
+
+            <!-- Shortlist status filter -->
+            <div class="filter-group">
+              <label>Pipeline Stage Focus</label>
+              <select id="recruiterStatusFilter">
+                <option value="all">All Pipeline Stages</option>
+                <option value="shortlist">Shortlisted Only</option>
+                <option value="review">Under Review Only</option>
+              </select>
+            </div>
+
+            <!-- Sidebar Saved Workspaces History -->
+            <div class="sidebar-title" style="margin-top:2.5rem; margin-bottom:1rem;">Hiring History & Batches</div>
+            <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); padding:1rem; border-radius:var(--radius-sm); font-size:0.8rem; display:flex; flex-direction:column; gap:0.5rem;" id="recruiterWorkspaceHistory">
+              <div class="empty-state" style="padding:0.75rem; text-align:center;">
+                <p style="font-size:0.75rem; color:var(--text-tertiary); margin:0;">No saved batches. Run batch matches to cache history.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: LEADERBOARD & CANDIDATE REPORT CARD -->
+          <div class="recruiter-main">
+            
+            <!-- Leaderboard Table -->
+            <div class="table-card">
+              <div class="table-header-block">
+                <div>
+                  <h3 class="table-title">Candidate Pipeline Leaderboard</h3>
+                  <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.25rem;">Click any applicant to drill down into skill maps and intelligence dossiers.</p>
+                </div>
+                <div class="table-controls">
+                  <input type="text" id="recruiterSearch" class="search-input" placeholder="Search applicant database..." />
+                  <button class="btn btn-secondary" id="recruiterDownloadXls" style="font-size:0.8rem; padding:0.5rem 1rem;">
+                    <i data-lucide="download" class="icon-sm"></i> Export CSV
+                  </button>
+                </div>
+              </div>
+
+              <!-- Responsive Table Shell -->
+              <div style="overflow-x:auto;">
+                <table class="premium-table" id="leaderboardTable">
+                  <thead>
+                    <tr>
+                      <th>Candidate Profile</th>
+                      <th>Comp Score</th>
+                      <th>Role Alignment</th>
+                      <th>Bullet Index</th>
+                      <th>Stage Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leaderboardBody">
+                    <!-- Standard Seed rows will render here -->
+                    <tr>
+                      <td colspan="5" class="empty-state">
+                        <i data-lucide="folder-open" class="empty-icon" style="display:block; margin:0 auto 1rem; opacity:0.5;"></i>
+                        <h3>No Candidates Loaded</h3>
+                        <p>Upload talent resume files in the sidebar and trigger semantic matching.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- CANDIDATE PROFILE DETAILED INSPECTOR DRAWER -->
+            <div class="inspect-panel" id="candidateInspectPanel">
+              <div class="inspect-header">
+                <div class="inspect-title-block">
+                  <h3 id="inspectName">Alex Rivera</h3>
+                  <p id="inspectTitle" style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.15rem;">Senior Software Engineer</p>
+                </div>
+                <div style="display:flex; gap:0.5rem;">
+                  <button class="btn btn-primary" id="inspectShortlistBtn" style="padding:0.4rem 1rem; font-size:0.8rem;">
+                    <i data-lucide="check-square" class="icon-xs"></i> Shortlist Candidate
+                  </button>
+                  <button class="btn btn-secondary" onclick="closeInspector()" style="padding:0.4rem 1rem; font-size:0.8rem;">
+                    <i data-lucide="x" class="icon-xs"></i> Close Dossier
+                  </button>
+                </div>
+              </div>
+
+              <div class="inspect-grid">
+                <!-- Left: Stats and heatmap grid -->
+                <div>
+                  <div class="radar-wrapper">
+                    <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:1rem; letter-spacing:0.05em;">
+                      Concept Affinity Ratios
+                    </h4>
+                    <div style="height: 220px; position: relative;">
+                      <canvas id="recruiterRadarChart"></canvas>
+                    </div>
+                  </div>
+                  
+                  <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:0.75rem; letter-spacing:0.05em;">
+                    Target Tech-Stack Alignment
+                  </h4>
+                  <div class="skills-heatmap-grid" id="inspectHeatmap">
+                    <div class="heatmap-block high">React.js</div>
+                    <div class="heatmap-block high">TypeScript</div>
+                    <div class="heatmap-block mid">Express</div>
+                    <div class="heatmap-block low">Postgres</div>
+                    <div class="heatmap-block low">CI/CD</div>
+                  </div>
+                </div>
+
+                <!-- Right: Recruiter insights and narrative -->
+                <div>
+                  <div class="insight-box">
+                    <h4>Recruiter Evaluation Insights</h4>
+                    <p id="inspectInsights">
+                      Candidate exhibits frontend styling infrastructure expertise. Semantic alignment shows overlap with core UI directives. Strong bullet points highlight scalable layouts and metric accomplishments.
+                    </p>
+                  </div>
+                  
+                  <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:0.75rem; letter-spacing:0.05em;">
+                    Dossier Contact Credentials
+                  </h4>
+                  <div style="background:rgba(0,0,0,0.15); border:1px solid var(--border); padding:1rem; border-radius:var(--radius-md); font-size:0.85rem; display:flex; flex-direction:column; gap:0.5rem;">
+                    <div>Email: <strong id="inspectEmail" style="color:var(--text-primary);">alex.rivera@gmail.com</strong></div>
+                    <div>GitHub: <strong id="inspectGit" style="color:var(--text-primary);">github.com/alexrivera</strong></div>
+                    <div>Estimated Experience: <strong id="inspectExp" style="color:var(--text-primary);">5+ Years</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ====================================================================
+       VIEW 4: PREMIUM ROLE-BASED AUTHENTICATION (LINEAR/NOTION STYLE)
+       ==================================================================== -->
+  <div id="authView" class="page-view">
+    <section class="auth-layout" style="display:flex; justify-content:center; align-items:center; min-height:75vh; padding:4rem 0;">
+      <div class="auth-card" style="width:100%; max-width:420px; background:var(--bg-card); border:1px solid var(--border); padding:2.5rem; border-radius:var(--radius-lg); box-shadow:var(--shadow-premium);">
+        
+        <!-- Brand Header -->
+        <div style="text-align:center; margin-bottom:2rem;">
+          <div class="logo-icon" style="margin:0 auto 0.75rem; width:48px; height:48px; font-size:1.25rem;">AG</div>
+          <h2 style="font-size:1.5rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.03em;">ApplyGeniuz Multi-Role</h2>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.25rem;">Enterprise AI Recruitment Gateway</p>
+        </div>
+
+        <!-- AUTH TABS (Login vs Signup) -->
+        <div class="jd-tab-header" style="margin-bottom:1.5rem;">
+          <button class="jd-tab active" id="tabAuthLogin" type="button">Sign In</button>
+          <button class="jd-tab" id="tabAuthSignup" type="button">Sign Up</button>
+        </div>
+
+        <!-- 1. SIGN IN FORM -->
+        <form id="authLoginForm" style="display:block;">
+          <div class="field-group">
+            <label>Corporate Email</label>
+            <input type="email" id="loginEmail" placeholder="you@company.com" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <div class="field-group">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <label style="margin-bottom:0;">Account Password</label>
+              <a href="#" id="authGoForgotPassword" style="font-size:0.75rem; color:var(--primary); text-decoration:none; font-weight:600;">Forgot password?</a>
+            </div>
+            <input type="password" id="loginPassword" placeholder="••••••••" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <button type="submit" class="btn btn-glow" style="width:100%; padding:0.8rem; margin-top:1.5rem; justify-content:center;">
+            <i data-lucide="log-in" class="icon-sm"></i> Access Workspace
+          </button>
+        </form>
+
+        <!-- 2. SIGN UP FORM -->
+        <form id="authSignupForm" style="display:none;">
+          <div class="field-group">
+            <label>Full Name</label>
+            <input type="text" id="signupName" placeholder="Alex Rivera" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <div class="field-group">
+            <label>Corporate Email</label>
+            <input type="email" id="signupEmail" placeholder="alex@company.com" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <div class="field-group">
+            <label>Account Password</label>
+            <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <div class="field-group">
+            <label>Select SaaS Account Role</label>
+            <select id="signupRole" style="padding:0.7rem 0.9rem; font-size:0.85rem;">
+              <option value="STUDENT" selected>Student / Candidate Profile</option>
+              <option value="RECRUITER">Recruiter / HR Workspace</option>
+            </select>
+          </div>
+          <div class="field-group" id="signupGithubField">
+            <label>GitHub Username (Optional)</label>
+            <input type="text" id="signupGithub" placeholder="e.g. torvalds" style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; padding:0.8rem; margin-top:1.5rem; justify-content:center;">
+            <i data-lucide="user-plus" class="icon-sm"></i> Register Credentials
+          </button>
+        </form>
+
+        <!-- 3. FORGOT PASSWORD FORM -->
+        <form id="authForgotForm" style="display:none;">
+          <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1.5rem; text-align:center; line-height:1.5;">
+            Enter your account email. We will send a secure recovery code to reset your dashboard credentials.
+          </p>
+          <div class="field-group">
+            <label>Registered Email</label>
+            <input type="email" id="forgotEmail" placeholder="you@company.com" required style="padding:0.7rem 0.9rem; font-size:0.85rem;" />
+          </div>
+          <button type="submit" class="btn btn-secondary" style="width:100%; padding:0.8rem; margin-top:1.5rem; justify-content:center;">
+            <i data-lucide="mail" class="icon-sm"></i> Send Recovery Link
+          </button>
+          <div style="text-align:center; margin-top:1.5rem;">
+            <a href="#" id="authBackToLogin" style="font-size:0.8rem; color:var(--text-secondary); text-decoration:none; font-weight:600;">Back to Sign In</a>
+          </div>
+        </form>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ====================================================================
+       VIEW 5: DATA-DRIVEN PLATFORM ADMIN ANALYTICS CONTROL DECK
+       ==================================================================== -->
+  <div id="adminView" class="page-view">
+    <section class="workspace-layout">
+      <div class="container">
+        
+        <!-- Welcome Meta Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h2 style="font-size:1.75rem; font-weight:800; letter-spacing:-0.03em;">Platform Administration Deck</h2>
+            <p style="font-size:0.875rem; color:var(--text-secondary);">Enterprise monitoring, usage analytics, user registries, and concept trends.</p>
+          </div>
+          <div class="status-indicator ready" id="adminStatus">System Operational</div>
+        </div>
+
+        <!-- 1. ANALYTICS SCORECARDS -->
+        <div class="metrics-grid" style="margin-bottom:2.5rem;">
+          <div class="metric-widget">
+            <div class="metric-num blue" id="admTotalUsers">0</div>
+            <div class="metric-lbl">Total Registered</div>
+            <div class="metric-hint">Candidates & recruiters</div>
+          </div>
+          <div class="metric-widget">
+            <div class="metric-num violet" id="admActiveUsers">0</div>
+            <div class="metric-lbl">Active Users</div>
+            <div class="metric-hint">Active sessions this week</div>
+          </div>
+          <div class="metric-widget">
+            <div class="metric-num green" id="admTotalResumes">0</div>
+            <div class="metric-lbl">Resumes Screened</div>
+            <div class="metric-hint">Processed through parsing core</div>
+          </div>
+          <div class="metric-widget">
+            <div class="metric-num yellow" id="admTotalJobs">0</div>
+            <div class="metric-lbl">Hiring Campaigns</div>
+            <div class="metric-hint">Active recruiter job briefs</div>
+          </div>
+        </div>
+
+        <div class="workspace-grid" style="grid-template-columns: 1.2fr 1.3fr; gap: 2.5rem;">
+          
+          <!-- LEFT SIDE: USER DIRECTORY & RECENT REGISTRATIONS -->
+          <div class="recruiter-main">
+            <div class="table-card">
+              <div class="table-header-block">
+                <div>
+                  <h3 class="table-title">Registered Accounts Directory</h3>
+                  <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.25rem;">Full list of system students, recruiters, and administrative keys.</p>
+                </div>
+                <div class="table-controls" style="margin-top:0.5rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+                  <input type="text" id="adminUserSearch" class="search-input" placeholder="Search user..." style="width:130px; padding:0.4rem;" />
+                  <select id="adminRoleFilter" style="font-size:0.75rem; padding:0.4rem; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--bg-card); color:var(--text-primary);">
+                    <option value="ALL">All Roles</option>
+                    <option value="STUDENT">Students Only</option>
+                    <option value="RECRUITER">Recruiters Only</option>
+                    <option value="ADMIN">Admins Only</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div style="overflow-x:auto;">
+                <table class="premium-table" style="min-width:400px;">
+                  <thead>
+                    <tr>
+                      <th>User Info</th>
+                      <th>Account Role</th>
+                      <th>Signup Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminUserTableBody">
+                    <tr>
+                      <td colspan="4" class="empty-state">
+                        <i data-lucide="users" class="empty-icon" style="display:block; margin:0 auto 1rem; opacity:0.5;"></i>
+                        <h3>Initializing Directory...</h3>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- LIVE ACTIVITY STREAM -->
+            <div class="table-card" style="margin-top:2.5rem;">
+              <h3 class="table-title">Live Candidate Activity Monitoring</h3>
+              <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.25rem; margin-bottom:1.5rem;">Real-time feed of resume screenings, optimized scoring evaluations, and cover letter builds.</p>
+              
+              <div style="overflow-x:auto;">
+                <table class="premium-table" style="min-width:400px;">
+                  <thead>
+                    <tr>
+                      <th>Applicant</th>
+                      <th>Assessed Job</th>
+                      <th>ATS Match</th>
+                      <th>Hiring Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminActivityTableBody">
+                    <tr>
+                      <td colspan="4" class="empty-state">
+                        <p style="font-size:0.8rem; color:var(--text-tertiary); margin:0;">No activities recorded in this session. Optimizing a candidate resume will populate this feed.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE: PLATFORM SKILL DEMAND & GENERAL ANALYTICS -->
+          <div class="sidebar-panel" style="position:static; width:100%; top:auto;">
+            <div class="sidebar-title">Global Concept Demand Index</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1.5rem;">Concept match ratios plotted across all user portfolios. Highlights tech skills in highest demand.</p>
+            
+            <div style="height: 250px; position: relative; margin-bottom: 2.5rem;">
+              <canvas id="adminTrendChart"></canvas>
+            </div>
+
+            <div class="sidebar-title">System Configuration Dossier</div>
+            <div style="background:rgba(0,0,0,0.15); border:1px solid var(--border); padding:1.25rem; border-radius:var(--radius-md); font-size:0.85rem; display:flex; flex-direction:column; gap:0.75rem;">
+              <div>Database Node: <strong style="color:var(--text-primary);">PostgreSQL Production Cluster</strong></div>
+              <div>Migration Status: <strong style="color:var(--success);">V2_RoleAuth_Workspaces Completed</strong></div>
+              <div>Semantic Index Scope: <strong style="color:var(--text-primary);">5 core competency divisions</strong></div>
+              <div>System Version: <strong style="color:var(--primary); font-family:monospace;">v1.4.2-SaaS</strong></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ====================================================================
+       FOOTER & UTILITY SHELLS
+       ==================================================================== -->
+  <footer class="footer" id="appFooter">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>ApplyGeniuz</h3>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.5rem; max-width:280px;">
+            Recruitment and resume optimization platform. Powered by client-side text extraction pipelines and semantic concept indices.
+          </p>
+        </div>
+        
+        <div class="footer-links-col">
+          <h4>Platform Architecture</h4>
+          <ul>
+            <li><a href="#how-it-works">Pipeline Workflow</a></li>
+            <li><a href="#fail-factors">Common Failures</a></li>
+            <li><a href="#testimonials">Placement Feedback</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links-col">
+          <h4>Interactive Portals</h4>
+          <ul>
+            <li><a href="#" onclick="switchView('student'); return false;">Student Workspace</a></li>
+            <li><a href="#" onclick="switchView('recruiter'); return false;">Recruiter Dashboard</a></li>
+            <li><a href="#" onclick="switchView('landing'); return false;">Home Landing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Platform Contact</h4>
+          <p style="font-size:0.85rem;">Support Desk:</p>
+          <a href="mailto:support@applygeniuz.com" style="color:var(--text-primary); text-decoration:none; font-weight:600; font-size:0.85rem; display:block; margin-top:0.25rem;">
+            support@applygeniuz.com
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> ApplyGeniuz. All rights reserved. Vercel-inspired UI architecture.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Agreement</a>
+          <a href="#">Terms of Deployment</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification element -->
+  <div class="toast" id="appToast">
+    <i data-lucide="bell" id="toastIcon"></i>
+    <span id="toastMsg">Standard Status Update</span>
+  </div>
+
+  <!-- Print targets container isolated for perfect vector rendering PDF prints -->
+  <div id="printTargetArea" style="display:none;"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
